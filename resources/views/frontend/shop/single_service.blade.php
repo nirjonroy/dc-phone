@@ -1,10 +1,14 @@
 @extends('frontend.app')
 @php
     $SeoSettings = DB::table('seo_settings')->where('id', 3)->first();
-    $metaTitle = $service->seo_title ? $service->seo_title : $service->name;
-    $metaDescription = $service->seo_description ? $service->seo_description : strip_tags($service->short_description);
-    $metaImage = $service->thumb_image ? asset($service->thumb_image) : ($SeoSettings->meta_image ? asset($SeoSettings->meta_image) : '');
-    $siteName = $SeoSettings->site_name ?: $SeoSettings->seo_title;
+    $metaTitle = $service->meta_title ?: ($service->seo_title ? $service->seo_title : $service->name);
+    $metaDescription = $service->meta_description ?: ($service->seo_description ? $service->seo_description : strip_tags($service->short_description));
+    $metaImage = $service->meta_image ? asset($service->meta_image) : ($service->thumb_image ? asset($service->thumb_image) : ($SeoSettings->meta_image ? asset($SeoSettings->meta_image) : ''));
+    $siteName = $service->site_name ?: ($SeoSettings->site_name ?: $SeoSettings->seo_title);
+    $metaKeywords = $service->keywords ?: ($SeoSettings->keywords ?: '');
+    $metaAuthor = $service->author ?: ($SeoSettings->author ?: '');
+    $metaPublisher = $service->publisher ?: ($SeoSettings->publisher ?: '');
+    $metaCopyright = $service->copyright ?: ($SeoSettings->copyright ?: '');
 @endphp
 @section('title', $metaTitle . ' - DC-Phone-Repair')
 @push('css')
@@ -20,18 +24,18 @@
     <meta name="title" content="{{$metaTitle}}">
 
     <meta name="description" content="{{$metaDescription}}">
-    @if($SeoSettings->keywords)
-        <meta name="keywords" content="{{$SeoSettings->keywords}}">
+    @if($metaKeywords)
+        <meta name="keywords" content="{{$metaKeywords}}">
     @endif
-    @if($SeoSettings->author)
-        <meta name="author" content="{{$SeoSettings->author}}">
+    @if($metaAuthor)
+        <meta name="author" content="{{$metaAuthor}}">
     @endif
-    @if($SeoSettings->publisher)
-        <meta name="publisher" content="{{$SeoSettings->publisher}}">
-        <meta property="article:publisher" content="{{$SeoSettings->publisher}}">
+    @if($metaPublisher)
+        <meta name="publisher" content="{{$metaPublisher}}">
+        <meta property="article:publisher" content="{{$metaPublisher}}">
     @endif
-    @if($SeoSettings->copyright)
-        <meta name="copyright" content="{{$SeoSettings->copyright}}">
+    @if($metaCopyright)
+        <meta name="copyright" content="{{$metaCopyright}}">
     @endif
     <link rel="canonical" href="{{url()->current()}}">
     <meta property="og:title" content="{{$metaTitle}}">

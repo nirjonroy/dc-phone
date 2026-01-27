@@ -210,6 +210,67 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group col-12">
+                                    <label>SEO Title</label>
+                                    <input type="text" class="form-control" name="seo_title" value="{{ $product->seo_title }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>SEO Description</label>
+                                    <textarea name="seo_description" cols="30" rows="5" class="form-control text-area-5">{{ $product->seo_description }}</textarea>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Title</label>
+                                    <input type="text" class="form-control" name="meta_title" value="{{ $product->meta_title }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Description</label>
+                                    <textarea name="meta_description" cols="30" rows="5" class="form-control text-area-5">{{ $product->meta_description }}</textarea>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Image</label>
+                                    <input type="file" class="form-control-file" name="meta_image">
+                                    @if ($product->meta_image)
+                                        <div class="mt-2">
+                                            <img src="{{ asset($product->meta_image) }}" alt="Meta image" style="max-height: 160px;">
+                                        </div>
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="remove_meta_image" id="removeMetaImage" value="1">
+                                            <label class="form-check-label" for="removeMetaImage">
+                                                Remove Meta Image
+                                            </label>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Meta Author</label>
+                                    <input type="text" class="form-control" name="author" value="{{ $product->author }}">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Meta Publisher</label>
+                                    <input type="text" class="form-control" name="publisher" value="{{ $product->publisher }}">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Meta Copyright</label>
+                                    <input type="text" class="form-control" name="copyright" value="{{ $product->copyright }}">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Site Name</label>
+                                    <input type="text" class="form-control" name="site_name" value="{{ $product->site_name }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Keywords</label>
+                                    <textarea name="keywords" cols="30" rows="3" class="form-control text-area-5">{{ $product->keywords }}</textarea>
+                                </div>
+
 
                                 <!--<div class="form-group col-12">-->
                                 <!--    <label>{{__('admin.SEO Title')}}</label>-->

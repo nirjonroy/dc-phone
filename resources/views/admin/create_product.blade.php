@@ -182,6 +182,56 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group col-12">
+                                    <label>SEO Title</label>
+                                    <input type="text" class="form-control" name="seo_title" value="{{ old('seo_title') }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>SEO Description</label>
+                                    <textarea name="seo_description" cols="30" rows="5" class="form-control text-area-5">{{ old('seo_description') }}</textarea>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Title</label>
+                                    <input type="text" class="form-control" name="meta_title" value="{{ old('meta_title') }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Description</label>
+                                    <textarea name="meta_description" cols="30" rows="5" class="form-control text-area-5">{{ old('meta_description') }}</textarea>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Image</label>
+                                    <input type="file" class="form-control-file" name="meta_image">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Meta Author</label>
+                                    <input type="text" class="form-control" name="author" value="{{ old('author') }}">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Meta Publisher</label>
+                                    <input type="text" class="form-control" name="publisher" value="{{ old('publisher') }}">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Meta Copyright</label>
+                                    <input type="text" class="form-control" name="copyright" value="{{ old('copyright') }}">
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Site Name</label>
+                                    <input type="text" class="form-control" name="site_name" value="{{ old('site_name') }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Meta Keywords</label>
+                                    <textarea name="keywords" cols="30" rows="3" class="form-control text-area-5">{{ old('keywords') }}</textarea>
+                                </div>
+
 
 
                                 <!--<div class="form-group col-12">-->

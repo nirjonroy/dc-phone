@@ -116,6 +116,7 @@ class ProductController extends Controller
             'thumb_image' => 'required',
             'category' => 'required',
             'short_description' => '',
+            'meta_image' => 'nullable|image',
 
 
         ];
@@ -164,12 +165,42 @@ class ProductController extends Controller
         $product->is_specification = $request->is_specification ? 1 : 0;
         $product->seo_title = $request->seo_title ? $request->seo_title : $request->name;
         $product->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $product->meta_title = $request->meta_title;
+        $product->meta_description = $request->meta_description;
+        $product->author = $request->author;
+        $product->publisher = $request->publisher;
+        $product->copyright = $request->copyright;
+        $product->site_name = $request->site_name;
+        $product->keywords = $request->keywords;
         $product->is_top = $request->top_product ? 1 : 0;
         $product->new_product = $request->new_arrival ? 1 : 0;
         $product->is_best = $request->best_product ? 1 : 0;
         $product->is_featured = $request->is_featured ? 1 : 0;
         $product->approve_by_admin = 1;
         $product->save();
+
+        if ($request->meta_image) {
+            $old_image = $product->meta_image;
+            $image = $request->meta_image;
+            $ext = $image->getClientOriginalExtension();
+            $image_name =
+                "product-meta-" .
+                date("Y-m-d-h-i-s-") .
+                rand(999, 9999) .
+                "." .
+                $ext;
+
+            $image_name = "uploads/website-images/" . $image_name;
+            Image::make($image)->save(public_path() . "/" . $image_name);
+            $product->meta_image = $image_name;
+            $product->save();
+
+            if ($old_image) {
+                if (File::exists(public_path() . "/" . $old_image)) {
+                    unlink(public_path() . "/" . $old_image);
+                }
+            }
+        }
 
 
         if ($request->hasFile('images')) {
@@ -261,6 +292,7 @@ class ProductController extends Controller
             'category' => 'required',
             'short_description' => '',
             'long_description' => '',
+            'meta_image' => 'nullable|image',
 
         ];
         $customMessages = [
@@ -318,6 +350,13 @@ class ProductController extends Controller
         $product->is_specification = $request->is_specification ? 1 : 0;
         $product->seo_title = $request->seo_title ? $request->seo_title : $request->name;
         $product->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $product->meta_title = $request->meta_title;
+        $product->meta_description = $request->meta_description;
+        $product->author = $request->author;
+        $product->publisher = $request->publisher;
+        $product->copyright = $request->copyright;
+        $product->site_name = $request->site_name;
+        $product->keywords = $request->keywords;
         $product->is_top = $request->top_product ? 1 : 0;
         $product->new_product = $request->new_arrival ? 1 : 0;
         $product->is_best = $request->best_product ? 1 : 0;
@@ -326,6 +365,38 @@ class ProductController extends Controller
             $product->approve_by_admin = $request->approve_by_admin;
         }
         $product->save();
+
+        if ($request->meta_image) {
+            $old_image = $product->meta_image;
+            $image = $request->meta_image;
+            $ext = $image->getClientOriginalExtension();
+            $image_name =
+                "product-meta-" .
+                date("Y-m-d-h-i-s-") .
+                rand(999, 9999) .
+                "." .
+                $ext;
+
+            $image_name = "uploads/website-images/" . $image_name;
+            Image::make($image)->save(public_path() . "/" . $image_name);
+            $product->meta_image = $image_name;
+            $product->save();
+
+            if ($old_image) {
+                if (File::exists(public_path() . "/" . $old_image)) {
+                    unlink(public_path() . "/" . $old_image);
+                }
+            }
+        } elseif ($request->remove_meta_image) {
+            $old_image = $product->meta_image;
+            $product->meta_image = null;
+            $product->save();
+            if ($old_image) {
+                if (File::exists(public_path() . "/" . $old_image)) {
+                    unlink(public_path() . "/" . $old_image);
+                }
+            }
+        }
 
 
         if ($request->hasFile('images')) {

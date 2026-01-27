@@ -2,10 +2,14 @@
 @extends('frontend.app')
 @php
     $SeoSettings = DB::table('seo_settings')->where('id', 4)->first();
-    $metaTitle = $blog->seo_title ? $blog->seo_title : $blog->title;
-    $metaDescription = $blog->seo_description ? $blog->seo_description : Str::limit(strip_tags($blog->description), 160, '');
-    $metaImage = $blog->image ? asset($blog->image) : ($SeoSettings && $SeoSettings->meta_image ? asset($SeoSettings->meta_image) : '');
-    $siteName = $SeoSettings ? ($SeoSettings->site_name ?: $SeoSettings->seo_title) : '';
+    $metaTitle = $blog->meta_title ?: ($blog->seo_title ? $blog->seo_title : $blog->title);
+    $metaDescription = $blog->meta_description ?: ($blog->seo_description ? $blog->seo_description : Str::limit(strip_tags($blog->description), 160, ''));
+    $metaImage = $blog->meta_image ? asset($blog->meta_image) : ($blog->image ? asset($blog->image) : ($SeoSettings && $SeoSettings->meta_image ? asset($SeoSettings->meta_image) : ''));
+    $siteName = $blog->site_name ?: ($SeoSettings ? ($SeoSettings->site_name ?: $SeoSettings->seo_title) : '');
+    $metaKeywords = $blog->keywords ?: ($SeoSettings && $SeoSettings->keywords ? $SeoSettings->keywords : '');
+    $metaAuthor = $blog->author ?: ($SeoSettings && $SeoSettings->author ? $SeoSettings->author : '');
+    $metaPublisher = $blog->publisher ?: ($SeoSettings && $SeoSettings->publisher ? $SeoSettings->publisher : '');
+    $metaCopyright = $blog->copyright ?: ($SeoSettings && $SeoSettings->copyright ? $SeoSettings->copyright : '');
 @endphp
 @section('title', $metaTitle)
 @push('css')
@@ -18,18 +22,18 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="title" content="{{ $metaTitle }}">
     <meta name="description" content="{{ $metaDescription }}">
-    @if($SeoSettings && $SeoSettings->keywords)
-        <meta name="keywords" content="{{ $SeoSettings->keywords }}">
+    @if($metaKeywords)
+        <meta name="keywords" content="{{ $metaKeywords }}">
     @endif
-    @if($SeoSettings && $SeoSettings->author)
-        <meta name="author" content="{{ $SeoSettings->author }}">
+    @if($metaAuthor)
+        <meta name="author" content="{{ $metaAuthor }}">
     @endif
-    @if($SeoSettings && $SeoSettings->publisher)
-        <meta name="publisher" content="{{ $SeoSettings->publisher }}">
-        <meta property="article:publisher" content="{{ $SeoSettings->publisher }}">
+    @if($metaPublisher)
+        <meta name="publisher" content="{{ $metaPublisher }}">
+        <meta property="article:publisher" content="{{ $metaPublisher }}">
     @endif
-    @if($SeoSettings && $SeoSettings->copyright)
-        <meta name="copyright" content="{{ $SeoSettings->copyright }}">
+    @if($metaCopyright)
+        <meta name="copyright" content="{{ $metaCopyright }}">
     @endif
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="{{ $metaTitle }}">

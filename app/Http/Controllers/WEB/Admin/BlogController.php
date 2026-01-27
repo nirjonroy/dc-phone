@@ -47,6 +47,7 @@ class BlogController extends Controller
             'category'=>'',
             'status'=>'required',
             'show_homepage'=>'',
+            'meta_image' => 'nullable|image',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
@@ -80,7 +81,37 @@ class BlogController extends Controller
         $blog->show_homepage = $request->show_homepage;
         $blog->seo_title = $request->seo_title ? $request->seo_title : $request->title;
         $blog->seo_description = $request->seo_description ? $request->seo_description : $request->title;
+        $blog->meta_title = $request->meta_title;
+        $blog->meta_description = $request->meta_description;
+        $blog->author = $request->author;
+        $blog->publisher = $request->publisher;
+        $blog->copyright = $request->copyright;
+        $blog->site_name = $request->site_name;
+        $blog->keywords = $request->keywords;
         $blog->save();
+
+        if ($request->meta_image) {
+            $old_image = $blog->meta_image;
+            $image = $request->meta_image;
+            $ext = $image->getClientOriginalExtension();
+            $image_name =
+                "blog-meta-" .
+                date("Y-m-d-h-i-s-") .
+                rand(999, 9999) .
+                "." .
+                $ext;
+
+            $image_name = "uploads/website-images/" . $image_name;
+            Image::make($image)->save(public_path() . "/" . $image_name);
+            $blog->meta_image = $image_name;
+            $blog->save();
+
+            if ($old_image) {
+                if (File::exists(public_path() . "/" . $old_image)) {
+                    unlink(public_path() . "/" . $old_image);
+                }
+            }
+        }
 
         $notification= trans('admin_validation.Created Successfully');
         $notification = array('messege'=>$notification,'alert-type'=>'success');
@@ -112,6 +143,7 @@ class BlogController extends Controller
             'category'=>'',
             'status'=>'required',
             'show_homepage'=>'required',
+            'meta_image' => 'nullable|image',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
@@ -146,7 +178,46 @@ class BlogController extends Controller
         $blog->show_homepage = $request->show_homepage;
         $blog->seo_title = $request->seo_title ? $request->seo_title : $request->title;
         $blog->seo_description = $request->seo_description ? $request->seo_description : $request->title;
+        $blog->meta_title = $request->meta_title;
+        $blog->meta_description = $request->meta_description;
+        $blog->author = $request->author;
+        $blog->publisher = $request->publisher;
+        $blog->copyright = $request->copyright;
+        $blog->site_name = $request->site_name;
+        $blog->keywords = $request->keywords;
         $blog->save();
+
+        if ($request->meta_image) {
+            $old_image = $blog->meta_image;
+            $image = $request->meta_image;
+            $ext = $image->getClientOriginalExtension();
+            $image_name =
+                "blog-meta-" .
+                date("Y-m-d-h-i-s-") .
+                rand(999, 9999) .
+                "." .
+                $ext;
+
+            $image_name = "uploads/website-images/" . $image_name;
+            Image::make($image)->save(public_path() . "/" . $image_name);
+            $blog->meta_image = $image_name;
+            $blog->save();
+
+            if ($old_image) {
+                if (File::exists(public_path() . "/" . $old_image)) {
+                    unlink(public_path() . "/" . $old_image);
+                }
+            }
+        } elseif ($request->remove_meta_image) {
+            $old_image = $blog->meta_image;
+            $blog->meta_image = null;
+            $blog->save();
+            if ($old_image) {
+                if (File::exists(public_path() . "/" . $old_image)) {
+                    unlink(public_path() . "/" . $old_image);
+                }
+            }
+        }
 
         $notification= trans('admin_validation.Updated Successfully');
         $notification = array('messege'=>$notification,'alert-type'=>'success');

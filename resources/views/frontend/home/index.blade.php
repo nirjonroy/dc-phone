@@ -88,9 +88,9 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="main-slider__content">
-                                <h2 class="main-slider__title">
+                                <h1 class="main-slider__title">
                                     {{$slider->title_one}}
-                                </h2>
+                                </h1>
                                 <p class="main-slider__text">
                                     {{$slider->title_two}}
                                 </p>

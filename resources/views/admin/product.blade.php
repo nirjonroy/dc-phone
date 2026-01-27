@@ -32,7 +32,7 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="table-responsive table-invoice">
-                        <table class="table table-striped" id="dataTable">
+                        <table class="table table-striped" id="productTable">
                             <thead>
                                 <tr>
                                     <th>
@@ -57,7 +57,7 @@
                                         <td>
                                         <input type="checkbox" class="product_checkbox" value="{{ $product->id}}">
                                         </td>
-                                        <td>{{ ++$index }}</td>
+                                        <td>{{ $products->firstItem() ? $products->firstItem() + $index : $index + 1 }}</td>
                                         <td><a target="_blank" href="{{ $frontend_view.$product->slug }}">{{ $product->short_name }}</a></td>
                                         <!--<td>{{ $setting->currency_icon }}{{ $product->price }}</td>-->
                                         <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="100px" height="100px"></td>
@@ -135,6 +135,11 @@
                             </tbody>
                         </table>
                       </div>
+                      @if ($products->hasPages())
+                        <div class="mt-3">
+                            {{ $products->onEachSide(1)->links('admin.partials.pagination') }}
+                        </div>
+                      @endif
                     </div>
                   </div>
                 </div>

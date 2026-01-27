@@ -42,7 +42,18 @@ class ProductController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $products = Product::with('category','seller','brand')->where(['vendor_id' => 0])->orderBy('id','desc')->get();
+        $perPage = (int) request('per_page', 25);
+        if ($perPage < 1) {
+            $perPage = 25;
+        }
+        if ($perPage > 100) {
+            $perPage = 100;
+        }
+        $products = Product::with('category','seller','brand')
+            ->where(['vendor_id' => 0])
+            ->orderBy('id','desc')
+            ->paginate($perPage)
+            ->withQueryString();
         $orderProducts = OrderProduct::all();
         $categories = Category::all();
         $setting = Setting::first();

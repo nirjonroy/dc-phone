@@ -62,6 +62,7 @@ use App\Http\Controllers\WEB\Admin\AdvertisementController;
 use App\Http\Controllers\WEB\Admin\FlashSaleController;
 use App\Http\Controllers\WEB\Admin\InventoryController;
 use App\Http\Controllers\WEB\Admin\NotificationController;
+use App\Http\Controllers\WEB\Admin\RedirectController;
 
 
 use App\Http\Controllers\WEB\Seller\SellerDashboardController;
@@ -572,6 +573,9 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::put('update-seo-setup/{id}',[ContentController::Class, 'updateSeoSetup'])->name('update-seo-setup');
     Route::get('get-seo-setup/{id}',[ContentController::Class, 'getSeoSetup'])->name('get-seo-setup');
 
+    Route::resource('redirect', RedirectController::class);
+    Route::put('redirect-status/{id}', [RedirectController::class, 'changeStatus'])->name('redirect.status');
+
     Route::resource('country', CountryController::class);
     Route::put('country-status/{id}',[CountryController::class,'changeStatus'])->name('country-status');
 
@@ -808,8 +812,6 @@ Route::prefix('front')->group(function(){
 });
 
 });
-
-
 
 
 

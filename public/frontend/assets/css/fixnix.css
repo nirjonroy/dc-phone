@@ -1912,8 +1912,8 @@ ul {
 
 .main-slider .container {
     position: relative;
-    padding-top: 330px;
-    padding-bottom: 240px;
+    padding-top: 220px;
+    padding-bottom: 160px;
     z-index: 30;
 }
 
@@ -5620,7 +5620,7 @@ ul {
 .page-header {
     position: relative;
     display: block;
-    padding: 169px 0 166px;
+    padding: 120px 0 110px;
     background-color: var(--fixnix-base);
     z-index: 1;
 }

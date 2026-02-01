@@ -95,7 +95,8 @@
                                     {{$slider->title_two}}
                                 </p>
                                 <div class="main-slider__btn-box">
-                                    <a href="{{route('front.about-us')}}" class="thm-btn main-slider__btn"> More</a>
+                                    <a href="{{route('front.contact')}}" class="thm-btn main-slider__btn d-none d-md-inline-block">Schedule An Appointment Today</a>
+                                    <a href="tel:+12024784799" class="thm-btn main-slider__btn d-inline-block d-md-none">Schedule An Appointment Today</a>
                                 </div>
                             </div>
                         </div>

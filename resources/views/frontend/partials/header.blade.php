@@ -5,7 +5,7 @@
             <div class="main-menu__wrapper-inner">
                 <div class="main-menu__left">
                     <div class="main-menu__logo">
-                        <a href="{{route('front.home')}}"><img src="{{ asset(siteInfo()->logo) }}" style="width:auto; height: 110px" alt=""></a>
+                        <a href="{{route('front.home')}}"><img src="{{ asset(siteInfo()->logo) }}" style="width:auto; height: 70px" alt=""></a>
                     </div>
                 </div>
                 <div class="main-menu__main-menu-box">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="main-menu__call">
                             <div class="main-menu__call-icon">
-                              <a href="tel:+12024784799">  <i class="fas fa-phone"></i> </a>
+                              <a href="tel:+12024784799">  <i class="fas fa-phone" style="color:#ffffff;"></i> </a>
                             </div>
                             <div class="main-menu__call-content">
                                 <p class="main-menu__call-sub-title">Call Anytime</p>

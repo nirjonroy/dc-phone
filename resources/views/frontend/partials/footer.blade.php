@@ -64,7 +64,9 @@
                                     <span class="fas fa-map"></span>
                                 </div>
                                 <div class="text">
-                                    <p>2704 Marion Barry Ave SE, Washington, DC 20020 <br> United States</p>
+                                    <p>
+                                        <a href="https://www.google.com/maps/place/Dc+Phone+Repair/@40.617918,-73.101379,3z/data=!4m6!3m5!1s0x89b7b9f7c32eef75:0x8da6eed6ae71af09!8m2!3d38.860888!4d-76.9685663!16s%2Fg%2F11vplbh6jk?hl=en&entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">2704 Marion Barry Ave SE, Washington, DC 20020 <br> United States</a>
+                                    </p>
                                 </div>
                             </li>
                             <li>
@@ -111,7 +113,7 @@
     <div class="site-footer__bottom">
         <div class="container">
             <div class="site-footer__bottom-inner">
-                <p class="site-footer__bottom-text">Design By Black Tech</a>
+                <p class="site-footer__bottom-text">Design By <a href="http://blacktechcorp.com/" target="_blank" rel="noopener noreferrer">Black Tech</a>
                 </p>
             </div>
         </div>

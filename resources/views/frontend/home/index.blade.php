@@ -521,9 +521,6 @@
 
 <!--Blog One End-->
 
-@php
-$phone = DB::table('informations')->first();
-@endphp
 <!--Newsletter One Start-->
 <section class="newsletter-one">
     <div class="newsletter-one-bg jarallax" data-jarallax data-speed="0.2" data-imgPosition="50% 0%" style="background-image: url({{ asset('frontend/assets/images/backgrounds/newsletter-one-bg.jpg') }});"></div>
@@ -531,7 +528,11 @@ $phone = DB::table('informations')->first();
         <div class="section-title section-title--two text-center">
             <span class="section-title__tagline">Contact Us</span>
             <h2 class="section-title__title">Let Us Know Or Call Us At</h2>
-            <a href="tel:+{{$phone->owner_phone}}" class="btn btn-warning">Call Now</a>
+            @php
+                $ctaPhone = siteInfo()->topbar_phone;
+                $ctaTel = $ctaPhone ? preg_replace('/[^0-9+]/', '', $ctaPhone) : '';
+            @endphp
+            <a href="{{ $ctaTel ? 'tel:' . $ctaTel : '#' }}" class="btn btn-warning">Call Now</a>
             {{-- <p class=" section-title__text">Duis aute irure dolor in repreh enderit in volup tate velit esse cillum dolore <br> eu fugiat nulla dolor atur with Lorem ipsum is simply </p> --}}
         </div>
         {{-- <form class="newsletter-one__form">

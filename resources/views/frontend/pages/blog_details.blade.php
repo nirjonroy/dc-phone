@@ -96,9 +96,9 @@
                         <img src="{{asset($blog->image)}}" alt="" class="img-fluid rounded float-left" style="width: 100%; height:360px">
                         <h2 class="section-title__title">{{$blog->title}}</h2>
                     </div>
-                    <p class="about-two__text-1">
-                        <p>{!! $blog->description !!}</p>
-                    </p>
+                    <div class="about-two__text-1 blog-details__content">
+                        {!! $blog->description !!}
+                    </div>
 
 
                 </div>

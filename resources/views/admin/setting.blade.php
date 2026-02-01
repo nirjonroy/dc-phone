@@ -141,6 +141,11 @@
                                                               <input type="email" name="contact_email" class="form-control" value="{{ $setting->contact_email }}">
                                                           </div>
 
+                                                          <div class="form-group">
+                                                              <label for="">Phone Number</label>
+                                                              <input type="text" name="topbar_phone" class="form-control" value="{{ $setting->topbar_phone }}">
+                                                          </div>
+
 
                                                           <div class="form-group">
                                                               <label for="">{{__('admin.Default Currency Name')}}</label>

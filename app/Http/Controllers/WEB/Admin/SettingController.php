@@ -233,6 +233,7 @@ class SettingController extends Controller
             'lg_header' => 'required',
             'sm_header' => 'required',
             'contact_email' => 'required',
+            'topbar_phone' => 'required',
             'currency_name' => 'required',
             'currency_icon' => 'required',
             'timezone' => 'required',
@@ -244,6 +245,7 @@ class SettingController extends Controller
             'lg_header.required' => trans('admin_validation.Sidebar large header is required'),
             'sm_header.required' => trans('admin_validation.Sidebar small header is required'),
             'contact_email.required' => trans('admin_validation.Contact email is required'),
+            'topbar_phone.required' => trans('admin_validation.Phone number is required'),
             'currency_name.required' => trans('admin_validation.Currency name is required'),
             'currency_icon.required' => trans('admin_validation.Currency icon is required'),
             'timezone.required' => trans('admin_validation.Timezone is required'),
@@ -259,6 +261,7 @@ class SettingController extends Controller
         $setting->sidebar_lg_header = $request->lg_header;
         $setting->sidebar_sm_header = $request->sm_header;
         $setting->contact_email = $request->contact_email;
+        $setting->topbar_phone = $request->topbar_phone;
         $setting->currency_name = $request->currency_name;
         $setting->currency_icon = $request->currency_icon;
         $setting->google_location = $request->google_location;

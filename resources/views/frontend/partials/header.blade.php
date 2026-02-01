@@ -5,7 +5,7 @@
             <div class="main-menu__wrapper-inner">
                 <div class="main-menu__left">
                     <div class="main-menu__logo">
-                        <a href="{{route('front.home')}}"><img src="{{ asset(siteInfo()->logo) }}" style="width:auto; height: 70px" alt=""></a>
+                        <a href="{{route('front.home')}}"><img src="{{ asset(siteInfo()->logo) }}" style="width:auto; height: 55px" alt=""></a>
                     </div>
                 </div>
                 <div class="main-menu__main-menu-box">
@@ -77,14 +77,17 @@
                                 <a href="cart.html" class="main-menu__cart fas fa-shopping-cart"></a>
                             </div> -->
                         </div>
+                        @php
+                            $headerPhone = siteInfo()->topbar_phone;
+                            $headerTel = $headerPhone ? preg_replace('/[^0-9+]/', '', $headerPhone) : '';
+                        @endphp
                         <div class="main-menu__call">
                             <div class="main-menu__call-icon">
-                              <a href="tel:+12024784799">  <i class="fas fa-phone" style="color:#ffffff;"></i> </a>
+                              <a href="{{ $headerTel ? 'tel:' . $headerTel : '#' }}">  <i class="fas fa-phone" style="color:#ffffff;"></i> </a>
                             </div>
                             <div class="main-menu__call-content">
                                 <p class="main-menu__call-sub-title">Call Anytime</p>
-                                <h5 class="main-menu__call-number"><a href="tel:123456">+92 ( 12345 ) -
-                                        67890</a></h5>
+                                <h5 class="main-menu__call-number"><a href="{{ $headerTel ? 'tel:' . $headerTel : '#' }}">{{ $headerPhone }}</a></h5>
                             </div>
                         </div>
                     </div>

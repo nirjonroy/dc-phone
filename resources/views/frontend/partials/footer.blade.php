@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="text">
                                     <p>
-                                        <a href="tel:+12024784799">+12024784799</a>
+                                        <a href="{{ siteInfo()->topbar_phone ? 'tel:' . preg_replace('/[^0-9+]/', '', siteInfo()->topbar_phone) : '#' }}">{{ siteInfo()->topbar_phone }}</a>
                                         <!--<a href="tel:4448880000">444 888 0000</a>-->
                                     </p>
                                 </div>
@@ -144,7 +144,7 @@
         </li>
         <li>
             <i class="fa fa-phone-alt"></i>
-            <a href="tel:+12024784799">+12024784799</a>
+            <a href="{{ siteInfo()->topbar_phone ? 'tel:' . preg_replace('/[^0-9+]/', '', siteInfo()->topbar_phone) : '#' }}">{{ siteInfo()->topbar_phone }}</a>
         </li>
         <li>
             <i class="fa fa-clock">

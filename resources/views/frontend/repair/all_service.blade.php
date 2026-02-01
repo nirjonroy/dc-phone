@@ -96,7 +96,7 @@
                         <img src="{{asset('frontend/assets/images/resources/about-1-1.jpg')}}" alt="">
                         <div class="about-one__our-goal">
                             <p class="about-one__our-goal-sub-title">What You Wanna Fix:</p>
-                            <h3 class="about-one__our-goal-title">"Select Device"</h3>
+                            <h3 class="about-one__our-goal-title">"Smartphone or Laptop"</h3>
                         </div>
                     </div>
                 </div>

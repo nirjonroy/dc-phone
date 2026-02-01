@@ -94,9 +94,13 @@
                                 <p class="main-slider__text">
                                     {{$slider->title_two}}
                                 </p>
+                                @php
+                                    $heroPhone = siteInfo()->topbar_phone;
+                                    $heroTel = $heroPhone ? preg_replace('/[^0-9+]/', '', $heroPhone) : '';
+                                @endphp
                                 <div class="main-slider__btn-box">
-                                    <a href="{{route('front.contact')}}" class="thm-btn main-slider__btn d-none d-md-inline-block">Schedule An Appointment Today</a>
-                                    <a href="tel:+12024784799" class="thm-btn main-slider__btn d-inline-block d-md-none">Schedule An Appointment Today</a>
+                                    <a href="{{route('front.contact')}}" class="thm-btn main-slider__btn d-none d-md-inline-block">Schedule an Appointment Today</a>
+                                    <a href="{{ $heroTel ? 'tel:' . $heroTel : '#' }}" class="thm-btn main-slider__btn d-inline-block d-md-none">Schedule an Appointment Today</a>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +145,7 @@
                         <img src="{{asset('frontend/assets/images/resources/about-1-1.jpg')}}" alt="">
                         <div class="about-one__our-goal">
                             <p class="about-one__our-goal-sub-title">What You Wanna Fix:</p>
-                            <h3 class="about-one__our-goal-title">"Select Device"</h3>
+                            <h3 class="about-one__our-goal-title">"Smartphone or Laptop"</h3>
                         </div>
                     </div>
                 </div>

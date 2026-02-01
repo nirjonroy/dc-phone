@@ -11040,13 +11040,22 @@ ul {
 
 /* Compact the main nav height */
 .main-menu__logo {
-    padding: 14px 0;
+    padding: 8px 0;
 }
 
 .main-menu__search-cart-call-box {
-    padding: 16px 0;
+    padding: 10px 0;
 }
 
 .main-menu__search-cart-box {
-    padding: 4px 0;
+    padding: 2px 0;
+}
+
+.main-menu__call-icon i {
+    color: #ffffff;
+}
+
+.main-menu__call-icon:hover {
+    background-color: var(--fixnix-base);
+    color: #ffffff;
 }

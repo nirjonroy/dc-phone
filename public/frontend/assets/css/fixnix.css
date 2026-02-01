@@ -5620,7 +5620,7 @@ ul {
 .page-header {
     position: relative;
     display: block;
-    padding: 120px 0 110px;
+    padding: 150px 0 120px;
     background-color: var(--fixnix-base);
     z-index: 1;
 }
@@ -5661,9 +5661,12 @@ ul {
 }
 
 .thm-breadcrumb {
-    position: absolute;
-    left: 0;
-    bottom: -92px;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
 }
 
 .thm-breadcrumb li {

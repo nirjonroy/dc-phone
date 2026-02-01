@@ -118,7 +118,7 @@
                     </div>
                     <div class="about-two__img-box">
                         <div class="about-two__img">
-                            <img src="assets/images/resources/about-2-1.jpg" alt="">
+                            <img src="{{ asset('frontend/assets/images/resources/about-2-1.jpg') }}" alt="">
                         </div>
                         <div class="about-two__img-two">
                             <img src="{{ asset($about_us->video_background) }}" alt="">
@@ -133,10 +133,10 @@
                         </div>
                     </div>
                     <div class="about-two__shape-1 shapeMover">
-                        <img src="assets/images/shapes/about-two-shape-1.png" alt="">
+                        <img src="{{ asset('frontend/assets/images/shapes/about-two-shape-1.png') }}" alt="">
                     </div>
                     <div class="about-two__shape-2 float-bob-y">
-                        <img src="assets/images/shapes/about-two-shape-2.png" alt="">
+                        <img src="{{ asset('frontend/assets/images/shapes/about-two-shape-2.png') }}" alt="">
                     </div>
                 </div>
             </div>

@@ -80,23 +80,25 @@
 <!--About Two Start-->
 <section class="about-two about-page">
     <div class="container">
-        <div class="row">
-
-            <div class="col-xl-12 col-lg-12">
-                @foreach($blog as $b)
-                <div class="about-two__right">
-                    <div class="section-title text-left">
-                        <img src="{{asset($b->image)}}" alt="" class="img-fluid rounded float-left" style="width: 500px; height:360px">
-                        <h2 class="section-title__title">{{$b->title}}</h2>
+        <div class="row g-4">
+            @foreach($blog as $b)
+            <div class="col-xl-4 col-lg-4 col-md-6">
+                <article class="blog-card">
+                    <a href="{{route('front.blog_details', [$b->slug])}}" class="blog-card__image-link">
+                        <img src="{{asset($b->image)}}" alt="{{ $b->title }}" class="img-fluid">
+                    </a>
+                    <div class="blog-card__body">
+                        <h3 class="blog-card__title">
+                            <a href="{{route('front.blog_details', [$b->slug])}}">{{$b->title}}</a>
+                        </h3>
+                        <p class="blog-card__excerpt">
+                            {!! Str::limit($b->description, 100, ' ...') !!}
+                        </p>
+                        <a href="{{route('front.blog_details', [$b->slug])}}" class="thm-btn">Learn More</a>
                     </div>
-                    <p class="about-two__text-1">
-                        {!! Str::limit($b->description, 100, ' ...') !!}
-                    </p>
-
-                    <a href="{{route('front.blog_details', [$b->slug])}}" class="thm-btn">Learn More</a>
-                </div>
-                @endforeach
+                </article>
             </div>
+            @endforeach
         </div>
     </div>
 </section>

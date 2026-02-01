@@ -752,7 +752,10 @@ Route::group(['as' => 'front.'], function(){
       	Route::get('/contact-us', 'contact_us')->name('contact_us');
       	Route::get('/blog', 'blog')->name('blog');
       	Route::post('/message', 'message')->name('direct-message');
-      	Route::get('/blog-details/{slug}', 'blog_details')->name('blog_details');
+      	Route::get('/blog/{slug}', 'blog_details')->name('blog_details');
+      	Route::get('/blog-details/{slug}', function ($slug) {
+            return redirect()->route('front.blog_details', ['slug' => $slug], 301);
+        });
           Route::get('/pages/{slug}', 'customPages')->name('customPages');
 
     });
@@ -812,7 +815,6 @@ Route::prefix('front')->group(function(){
 });
 
 });
-
 
 
 

@@ -740,7 +740,10 @@ Route::group(['as' => 'front.'], function(){
         Route::get('/service/{slug?}', 'shop')->name('shop');
         Route::get('/service-details/{slug?}', 'single_service')->name('single.service');
         Route::get('repair/{slug}', 'repair_page')->name('repair');
-        Route::get('all-service', 'all_service')->name('repair.all');
+        Route::get('services', 'all_service')->name('repair.all');
+        Route::get('all-service', function () {
+            return redirect()->route('front.repair.all', [], 301);
+        });
         Route::post('repair-submit', 'repair_submit')->name('repair.submit');
         Route::get('/flash-selling-product', 'flashSellProducts')->name('flash-sell');
         Route::get('/most-selling-product', 'mostSellingProducts')->name('popular');
@@ -815,7 +818,6 @@ Route::prefix('front')->group(function(){
 });
 
 });
-
 
 
 

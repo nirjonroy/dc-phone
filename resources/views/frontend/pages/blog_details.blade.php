@@ -93,7 +93,7 @@
 
                 <div class="about-two__right">
                     <div class="section-title text-left">
-                        <img src="{{asset($blog->image)}}" alt="" class="img-fluid rounded float-left" style="width: 100%; height:360px">
+                        <img src="{{asset($blog->image)}}" alt="" class="img-fluid rounded float-left" style="width: 100%; height: auto">
                         <h2 class="section-title__title">{{$blog->title}}</h2>
                     </div>
                     <div class="about-two__text-1 blog-details__content">

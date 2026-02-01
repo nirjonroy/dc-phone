@@ -31,7 +31,7 @@
                         <ul class="footer-widget__Explore-list list-unstyled">
                             <li><a href="{{route('front.home')}}">Home</a></li>
                             <li><a href="{{route('front.about-us')}}">About Us</a></li>
-                            <li><a href="{{url('all-service')}}">Services</a></li>
+                            <li><a href="{{route('front.repair.all')}}">Services</a></li>
                             <li><a href="{{url('blog')}}">Blog</a></li>
                             <li><a href="{{route('front.contact')}}">Contact Us</a></li>
                         </ul>

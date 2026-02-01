@@ -11059,3 +11059,32 @@ ul {
     background-color: var(--fixnix-base);
     color: #ffffff;
 }
+
+/* Services section: emphasize business name and tighten spacing */
+.services-one__section-title {
+    margin-bottom: 26px;
+}
+
+.services-one__section-title .section-title__text {
+    padding-top: 8px;
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.services-one .services-one__single {
+    height: auto;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.services-one .services-one__content {
+    padding: 16px 20px 18px;
+}
+
+.services-one .services-one__img {
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}

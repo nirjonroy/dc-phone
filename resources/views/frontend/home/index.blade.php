@@ -262,7 +262,7 @@
         <img src="{{asset('frontend/assets/images/shapes/services-one-shape-2.png')}}" alt="">
     </div>
     <div class="container">
-        <div class="section-title section-title--two text-center">
+        <div class="section-title section-title--two text-center services-one__section-title">
             <span class="section-title__tagline">OUR SERVICES</span>
             <h2 class="section-title__title">Our Efficient Solution</h2>
             <p class="section-title__text">DC Phone Repair</p>

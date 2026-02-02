@@ -101,12 +101,68 @@ class HomeController extends Controller
       	//dd($contact);
     }
 
-  	public function blog_details($slug){
-    	$blog = Blog::where('slug', $slug)->first();
-      	//dd($blog);
-      	return view('frontend.pages.blog_details', compact('blog'));
+    public function blog_details($slug){
+        $blog = Blog::where('slug', $slug)->first();
+        //dd($blog);
+        return view('frontend.pages.blog_details', compact('blog'));
     }
 
+    public function servicesCategory($category)
+    {
+        $categoryModel = Category::whereSlug($category)->firstOrFail();
+        $categories = SubCategory::where(['category_id' => $categoryModel->id])
+            ->orderBy('serial', 'ASC')
+            ->where('status', 1)
+            ->latest()
+            ->get();
+
+        if ($categories->count() <= 0) {
+            return redirect()->route('front.shop', ['slug'=> $categoryModel->slug ]);
+        }
+
+        return view('frontend.category.sub-category', compact('categories'));
+    }
+
+    public function servicesSubCategory($category, $subcategory)
+    {
+        $categoryModel = Category::whereSlug($category)->firstOrFail();
+        $subCategory = SubCategory::where('slug', $subcategory)
+            ->where('category_id', $categoryModel->id)
+            ->firstOrFail();
+
+        $categories = ChildCategory::where(['sub_category_id' => $subCategory->id])
+            ->orderBy('serial', 'ASC')
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        if ($categories->count() <= 0) {
+            return redirect()->route('front.shop', ['slug'=> $subCategory->slug ]);
+        }
+
+        return view('frontend.category.child-category', compact('categories'));
+    }
+
+    public function repairIndex(Request $request, $slug = null)
+    {
+        if (!$slug) {
+            return $this->shop($request, $slug);
+        }
+
+        $category = Category::whereSlug($slug)->first();
+        $subCategory = SubCategory::whereSlug($slug)->first();
+        $childCategory = ChildCategory::whereSlug($slug)->first();
+
+        if ($category || $subCategory || $childCategory) {
+            return $this->shop($request, $slug);
+        }
+
+        $service = Product::where('slug', $slug)->first();
+        if ($service) {
+            return redirect()->route('front.repair', ['slug' => $slug], 301);
+        }
+
+        return $this->shop($request, $slug);
+    }
 
     public function subCategoriesByCategory(Request $request)
     {
@@ -247,6 +303,7 @@ class HomeController extends Controller
         $all_service = Category::where('status', 1)->get();
         return view('frontend.repair.all_service', compact('all_service'));
     }
+
 
     public function repair_submit(Request $request){
         // dd($request->all());

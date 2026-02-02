@@ -160,10 +160,7 @@
                     <ul class="about-one__points list-unstyled">
                         @foreach ($feateuredCategories->take(6) as $key => $item)
                         <li>
-                            <a href="{{ route('front.subcategory', [
-                                        'type'=>'subcategory',
-                                        'slug'=> $item->category->slug
-                                        ] ) }}">
+                            <a href="{{ route('front.services.category', ['category' => $item->category->slug]) }}">
                             <div class="about-one__points-single">
                                 <div class="about-one__points-icon">
                                     <span class="">

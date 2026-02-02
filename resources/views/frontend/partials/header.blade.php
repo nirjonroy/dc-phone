@@ -33,10 +33,7 @@
                             <a href="{{route('front.repair.all')}}">Services</a>
                             <ul class="shadow-box">
                                 @foreach(categories() as $key => $item)
-                                <li><a href="{{ route('front.subcategory', [
-                                    'type'=>'subcategory',
-                                    'slug'=> $item->slug
-                                    ] ) }}">{{$item->name}}</a></li>
+                                <li><a href="{{ route('front.services.category', ['category' => $item->slug]) }}">{{$item->name}}</a></li>
                                 @endforeach
                                 <!-- <li><a href="services-details.html">Service Detail</a></li> -->
                             </ul>

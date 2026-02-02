@@ -12,10 +12,7 @@
                                 <div class="store-menu-block">
 
                                 @foreach(popularCategories() as $cat)
-                                <a href="{{ route('front.shop', [
-                                                    'type' => 'subcategory',
-                                                    'slug'=> $cat->category->slug 
-                                                ] ) }}">
+                                <a href="{{ route('front.services.category', ['category' => $cat->category->slug]) }}">
                                 <div class="store-item selected">
                                         <img src="{{ asset($cat->category->image) }}" width="20px" height="20px">
                                         <h5 class="name">{{ $cat->category->name }}</h5>
@@ -95,9 +92,7 @@
                                 <li class="unselected topLevel">
                                     <img src="{{ asset($item->image) }}" alt="icon" class="MenuItemIcons">
                                     <div class="name level">
-                                        <a href="{{ $item->activeSubCategories->count() <= 0 ? route('front.shop', [
-                                            'slug'=> $item->slug 
-                                        ] ) : '#'}}"><span>{{ $item->name }}</span>
+                                        <a href="{{ $item->activeSubCategories->count() <= 0 ? route('front.services.category', ['category' => $item->slug]) : '#'}}"><span>{{ $item->name }}</span>
                                             @if($item->activeSubCategories->count())
                                                 <i class="fas fa-angle-right"></i>
                                             @endif
@@ -108,10 +103,7 @@
                                         @foreach($item->activeSubCategories as $key => $item)
                                         <li class="unselected level">
                                             <div class="name">
-                                                <a href="{{ $item->activeChildCategories->count() <= 0 ? route('front.subcategory', [
-                                            'type'=>'childcategory', 
-                                            'slug'=> $item->slug 
-                                        ] ) : '#'}}">
+                                                <a href="{{ $item->activeChildCategories->count() <= 0 ? route('front.services.subcategory', ['category' => $item->category->slug, 'subcategory' => $item->slug]) : '#'}}">
                                                     <span>{{ $item->name }}</span>
                                                     @if($item->activeChildCategories->count())
                                                         <i class="fas fa-angle-right"></i>

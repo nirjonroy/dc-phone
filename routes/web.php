@@ -736,10 +736,38 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 Route::group(['as' => 'front.'], function(){
     Route::controller(FrontHomeController::class)->group(function(){
         Route::get('/', 'index')->name('home');
-        Route::get('/category/{type}/{slug}', 'subCategoriesByCategory')->name('subcategory');
-        Route::get('/service/{slug?}', 'shop')->name('shop');
-        Route::get('/service-details/{slug?}', 'single_service')->name('single.service');
-        Route::get('repair/{slug}', 'repair_page')->name('repair');
+        Route::get('/category/{type}/{slug}', function ($type, $slug) {
+            if ($type === 'subcategory') {
+                return redirect()->route('front.services.category', ['category' => $slug], 301);
+            }
+
+            if ($type === 'childcategory') {
+                $subCategory = \App\Models\SubCategory::with('category')->where('slug', $slug)->first();
+                if ($subCategory && $subCategory->category) {
+                    return redirect()->route('front.services.subcategory', [
+                        'category' => $subCategory->category->slug,
+                        'subcategory' => $subCategory->slug,
+                    ], 301);
+                }
+            }
+
+            return abort(404);
+        })->name('subcategory');
+
+        Route::get('/services/{category}', 'servicesCategory')->name('services.category');
+        Route::get('/services/{category}/{subcategory}', 'servicesSubCategory')->name('services.subcategory');
+
+        Route::get('/repair/{slug?}', 'repairIndex')->name('shop');
+        Route::get('/service/{slug?}', function ($slug = null) {
+            return redirect()->route('front.shop', ['slug' => $slug], 301);
+        });
+
+        Route::get('/make-appoinment/{slug?}', 'single_service')->name('single.service');
+        Route::get('/service-details/{slug?}', function ($slug = null) {
+            return redirect()->route('front.single.service', ['slug' => $slug], 301);
+        });
+
+        Route::get('appoinment/{slug}', 'repair_page')->name('repair');
         Route::get('services', 'all_service')->name('repair.all');
         Route::get('all-service', function () {
             return redirect()->route('front.repair.all', [], 301);
@@ -818,15 +846,5 @@ Route::prefix('front')->group(function(){
 });
 
 });
-
-
-
-
-
-
-
-
-
-
 
 

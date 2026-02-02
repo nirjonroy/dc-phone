@@ -45,10 +45,7 @@
             @forelse($categories as $key => $subCategory)
             
             <div class="col-xl-3 col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="100ms">
-                <a href="{{ route('front.subcategory', [
-                            'type'=>'childcategory',
-                            'slug'=> $subCategory->slug
-                            ]) }}">
+                <a href="{{ route('front.services.subcategory', ['category' => $subCategory->category->slug, 'subcategory' => $subCategory->slug]) }}">
                 <div class="services-two__single">
                     <div class="services-two__single-inner">
                         <div class="">
@@ -61,10 +58,7 @@
                                                     @endif
                             </span>
                         </div>
-                        <h3 class="services-two__title"><a href="{{ route('front.subcategory', [
-                            'type'=>'childcategory',
-                            'slug'=> $subCategory->slug
-                            ]) }}">
+                        <h3 class="services-two__title"><a href="{{ route('front.services.subcategory', ['category' => $subCategory->category->slug, 'subcategory' => $subCategory->slug]) }}">
                             {{ $subCategory->name }}
                         </a></h3>
                         {{-- <p class="services-two__text">Duis aute irure dolor in repreh enderit in volup tate velit esse cillum dolore fugiat nulla dolor atur</p> --}}

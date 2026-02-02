@@ -44,10 +44,7 @@
                         </div>
                         <ul class="footer-widget__services-list list-unstyled">
                             @foreach(categories()->take(5) as $key => $item)
-                            <li><a href="{{ route('front.subcategory', [
-                                'type'=>'subcategory',
-                                'slug'=> $item->slug
-                                ] ) }}">{{$item->name}}</a></li>
+                            <li><a href="{{ route('front.services.category', ['category' => $item->slug]) }}">{{$item->name}}</a></li>
                             @endforeach
                         </ul>
                     </div>

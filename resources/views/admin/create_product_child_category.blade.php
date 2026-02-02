@@ -53,6 +53,47 @@
                                     <label>{{__('admin.Slug')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="slug" class="form-control"  name="slug">
                                 </div>
+
+                                <div class="form-group col-12">
+                                    <label>SEO Title</label>
+                                    <input type="text" class="form-control" name="seo_title">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>SEO Description</label>
+                                    <textarea name="seo_description" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Meta Title</label>
+                                    <input type="text" class="form-control" name="meta_title">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Meta Description</label>
+                                    <textarea name="meta_description" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Meta Image</label>
+                                    <input type="file" class="form-control-file" name="meta_image">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Meta Author</label>
+                                    <input type="text" class="form-control" name="author">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Meta Publisher</label>
+                                    <input type="text" class="form-control" name="publisher">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Meta Copyright</label>
+                                    <input type="text" class="form-control" name="copyright">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Site Name</label>
+                                    <input type="text" class="form-control" name="site_name">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Meta Keywords</label>
+                                    <textarea name="keywords" class="form-control" rows="3"></textarea>
+                                </div>
                                 
                                 <div class="form-group col-12">
                                     <label> Serial <span class="text-danger">*</span></label>

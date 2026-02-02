@@ -52,6 +52,7 @@ class ProductCategoryController extends Controller
             'short_description'=>'',
             'icon'=>'',
             'image'=>'required',
+            'meta_image' => 'nullable|image',
         ];
         $customMessages = [
             'name.required' => trans('admin_validation.Name is required'),
@@ -77,7 +78,26 @@ class ProductCategoryController extends Controller
         $category->icon = $request->icon;
         $category->priority = $request->priority;
         $category->short_description = $request->short_description;
+        $category->seo_title = $request->seo_title ? $request->seo_title : $request->name;
+        $category->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $category->meta_title = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        $category->author = $request->author;
+        $category->publisher = $request->publisher;
+        $category->copyright = $request->copyright;
+        $category->site_name = $request->site_name;
+        $category->keywords = $request->keywords;
         $category->save();
+
+        if ($request->meta_image) {
+            $image = $request->meta_image;
+            $extention = $image->getClientOriginalExtension();
+            $image_name = 'category-meta-'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $image_name = 'uploads/custom-images/'.$image_name;
+            Image::make($image)->save(public_path().'/'.$image_name);
+            $category->meta_image = $image_name;
+            $category->save();
+        }
 
         $notification = trans('admin_validation.Created Successfully');
         $notification = array('messege'=>$notification,'alert-type'=>'success');
@@ -110,6 +130,7 @@ class ProductCategoryController extends Controller
             'priority'=>'',
             'icon'=>'',
             'short_description'=>'',
+            'meta_image' => 'nullable|image',
         ];
 
         $customMessages = [
@@ -143,7 +164,33 @@ class ProductCategoryController extends Controller
         $category->status = $request->status;
         $category->priority = $request->priority;
         $category->short_description = $request->short_description;
+        $category->seo_title = $request->seo_title ? $request->seo_title : $request->name;
+        $category->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $category->meta_title = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        $category->author = $request->author;
+        $category->publisher = $request->publisher;
+        $category->copyright = $request->copyright;
+        $category->site_name = $request->site_name;
+        $category->keywords = $request->keywords;
         $category->save();
+
+        if ($request->meta_image) {
+            $old_image = $category->meta_image;
+            $image = $request->meta_image;
+            $extention = $image->getClientOriginalExtension();
+            $image_name = 'category-meta-'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $image_name = 'uploads/custom-images/'.$image_name;
+            Image::make($image)->save(public_path().'/'.$image_name);
+            $category->meta_image = $image_name;
+            $category->save();
+            if($old_image && File::exists(public_path().'/'.$old_image)) unlink(public_path().'/'.$old_image);
+        } elseif ($request->remove_meta_image) {
+            $old_image = $category->meta_image;
+            $category->meta_image = null;
+            $category->save();
+            if($old_image && File::exists(public_path().'/'.$old_image)) unlink(public_path().'/'.$old_image);
+        }
 
         $notification = trans('admin_validation.Update Successfully');
         $notification = array('messege'=>$notification,'alert-type'=>'success');

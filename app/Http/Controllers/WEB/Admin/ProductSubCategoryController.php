@@ -50,7 +50,8 @@ class ProductSubCategoryController extends Controller
             'slug'=>'required|unique:sub_categories',
             'category'=>'required',
             'status'=>'required',
-            'image'=> 'required'
+            'image'=> 'required',
+            'meta_image' => 'nullable|image'
         ];
 
         $customMessages = [
@@ -78,6 +79,27 @@ class ProductSubCategoryController extends Controller
         $subCategory->status = $request->status;
         $subCategory->serial = $request->serial;
         $subCategory->save();
+
+        $subCategory->seo_title = $request->seo_title ? $request->seo_title : $request->name;
+        $subCategory->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $subCategory->meta_title = $request->meta_title;
+        $subCategory->meta_description = $request->meta_description;
+        $subCategory->author = $request->author;
+        $subCategory->publisher = $request->publisher;
+        $subCategory->copyright = $request->copyright;
+        $subCategory->site_name = $request->site_name;
+        $subCategory->keywords = $request->keywords;
+        $subCategory->save();
+
+        if ($request->meta_image) {
+            $image = $request->meta_image;
+            $extention = $image->getClientOriginalExtension();
+            $image_name = 'sub-category-meta-'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $image_name = 'uploads/custom-images/'.$image_name;
+            Image::make($image)->save(public_path().'/'.$image_name);
+            $subCategory->meta_image = $image_name;
+            $subCategory->save();
+        }
 
         $notification = trans('admin_validation.Created Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');
@@ -108,7 +130,8 @@ class ProductSubCategoryController extends Controller
             'name'=>'required',
             'slug'=>'required|unique:sub_categories,slug,'.$subCategory->id,
             'category'=>'required',
-            'status'=>'required'
+            'status'=>'required',
+            'meta_image' => 'nullable|image'
         ];
 
         $customMessages = [
@@ -139,6 +162,34 @@ class ProductSubCategoryController extends Controller
         $subCategory->status = $request->status;
         $subCategory->serial = $request->serial;
         $subCategory->save();
+
+        $subCategory->seo_title = $request->seo_title ? $request->seo_title : $request->name;
+        $subCategory->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $subCategory->meta_title = $request->meta_title;
+        $subCategory->meta_description = $request->meta_description;
+        $subCategory->author = $request->author;
+        $subCategory->publisher = $request->publisher;
+        $subCategory->copyright = $request->copyright;
+        $subCategory->site_name = $request->site_name;
+        $subCategory->keywords = $request->keywords;
+        $subCategory->save();
+
+        if ($request->meta_image) {
+            $old_image = $subCategory->meta_image;
+            $image = $request->meta_image;
+            $extention = $image->getClientOriginalExtension();
+            $image_name = 'sub-category-meta-'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $image_name = 'uploads/custom-images/'.$image_name;
+            Image::make($image)->save(public_path().'/'.$image_name);
+            $subCategory->meta_image = $image_name;
+            $subCategory->save();
+            if($old_image && File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
+        } elseif ($request->remove_meta_image) {
+            $old_image = $subCategory->meta_image;
+            $subCategory->meta_image = null;
+            $subCategory->save();
+            if($old_image && File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
+        }
 
         $notification = trans('admin_validation.Update Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');

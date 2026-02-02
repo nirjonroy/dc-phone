@@ -68,7 +68,8 @@ class ProductChildCategoryController extends Controller
             'category'=>'required',
             'sub_category'=>'required',
             'slug'=>'required|unique:child_categories',
-            'status'=>'required'
+            'status'=>'required',
+            'meta_image' => 'nullable|image'
         ];
         $customMessages = [
             'name.required' => trans('admin_validation.Name is required'),
@@ -97,6 +98,27 @@ class ProductChildCategoryController extends Controller
         $childCategory->status = $request->status;
         $childCategory->serial = $request->serial;
         $childCategory->save();
+
+        $childCategory->seo_title = $request->seo_title ? $request->seo_title : $request->name;
+        $childCategory->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $childCategory->meta_title = $request->meta_title;
+        $childCategory->meta_description = $request->meta_description;
+        $childCategory->author = $request->author;
+        $childCategory->publisher = $request->publisher;
+        $childCategory->copyright = $request->copyright;
+        $childCategory->site_name = $request->site_name;
+        $childCategory->keywords = $request->keywords;
+        $childCategory->save();
+
+        if ($request->meta_image) {
+            $image = $request->meta_image;
+            $extention = $image->getClientOriginalExtension();
+            $image_name = 'child-category-meta-'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $image_name = 'uploads/custom-images/'.$image_name;
+            Image::make($image)->save(public_path().'/'.$image_name);
+            $childCategory->meta_image = $image_name;
+            $childCategory->save();
+        }
 
         $notification = trans('admin_validation.Created Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');
@@ -132,7 +154,8 @@ class ProductChildCategoryController extends Controller
             'sub_category' => 'required',
             'slug' => 'required|unique:child_categories,slug,'.$childCategory->id,
             'status' => 'required',
-            'image'=> 'required'
+            'image'=> 'required',
+            'meta_image' => 'nullable|image'
         ];
         $customMessages = [
             'name.required' => trans('admin_validation.Name is required'),
@@ -166,6 +189,34 @@ class ProductChildCategoryController extends Controller
         $childCategory->serial = $request->serial;
         $childCategory->status = $request->status;
         $childCategory->save();
+
+        $childCategory->seo_title = $request->seo_title ? $request->seo_title : $request->name;
+        $childCategory->seo_description = $request->seo_description ? $request->seo_description : $request->name;
+        $childCategory->meta_title = $request->meta_title;
+        $childCategory->meta_description = $request->meta_description;
+        $childCategory->author = $request->author;
+        $childCategory->publisher = $request->publisher;
+        $childCategory->copyright = $request->copyright;
+        $childCategory->site_name = $request->site_name;
+        $childCategory->keywords = $request->keywords;
+        $childCategory->save();
+
+        if ($request->meta_image) {
+            $old_image = $childCategory->meta_image;
+            $image = $request->meta_image;
+            $extention = $image->getClientOriginalExtension();
+            $image_name = 'child-category-meta-'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $image_name = 'uploads/custom-images/'.$image_name;
+            Image::make($image)->save(public_path().'/'.$image_name);
+            $childCategory->meta_image = $image_name;
+            $childCategory->save();
+            if($old_image && File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
+        } elseif ($request->remove_meta_image) {
+            $old_image = $childCategory->meta_image;
+            $childCategory->meta_image = null;
+            $childCategory->save();
+            if($old_image && File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
+        }
 
         $notification = trans('admin_validation.Update Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');

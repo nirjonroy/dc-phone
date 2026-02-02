@@ -63,6 +63,7 @@ use App\Http\Controllers\WEB\Admin\FlashSaleController;
 use App\Http\Controllers\WEB\Admin\InventoryController;
 use App\Http\Controllers\WEB\Admin\NotificationController;
 use App\Http\Controllers\WEB\Admin\RedirectController;
+use App\Http\Controllers\WEB\Admin\SitemapController as AdminSitemapController;
 
 
 use App\Http\Controllers\WEB\Seller\SellerDashboardController;
@@ -102,6 +103,7 @@ use App\Http\Controllers\WEB\Frontend\ProductController as FrontProductControlle
 use App\Http\Controllers\WEB\Frontend\CartController as FrontCartController;
 use App\Http\Controllers\WEB\Frontend\CheckoutController as FrontCheckoutController;
 use App\Http\Controllers\WEB\Frontend\OrderController as FrontOrderController;
+use App\Http\Controllers\WEB\Frontend\SitemapController as FrontSitemapController;
 
 Route::get('/clear-cache', function(){
     \Artisan::call('cache:clear');
@@ -132,6 +134,8 @@ Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
+
+Route::get('/sitemap.xml', [FrontSitemapController::class, 'index'])->name('sitemap');
 
 Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
     Route::get('landing-page/{id}', [LandingPageController::class,'landing_page'])->name('landing_index');
@@ -416,6 +420,12 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::resource('custom-page', CustomPageController::class);
 
     Route::put('custom-page-status/{id}', [CustomPageController::class,'changeStatus'])->name('custom-page.status');
+
+    Route::get('sitemap', [AdminSitemapController::class, 'index'])->name('sitemap.index');
+    Route::put('sitemap/settings', [AdminSitemapController::class, 'updateSettings'])->name('sitemap.settings.update');
+    Route::post('sitemap/urls', [AdminSitemapController::class, 'storeUrl'])->name('sitemap.urls.store');
+    Route::put('sitemap/urls/{id}', [AdminSitemapController::class, 'updateUrl'])->name('sitemap.urls.update');
+    Route::delete('sitemap/urls/{id}', [AdminSitemapController::class, 'destroyUrl'])->name('sitemap.urls.destroy');
 
     Route::resource('terms-and-condition', TermsAndConditionController::class);
 
@@ -846,5 +856,3 @@ Route::prefix('front')->group(function(){
 });
 
 });
-
-

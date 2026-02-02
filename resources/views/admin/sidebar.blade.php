@@ -220,6 +220,7 @@
             <ul class="dropdown-menu">
 
                 <li class="{{ Route::is('admin.seo-setup') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seo-setup') }}">{{__('admin.SEO Setup')}}</a></li>
+                <li class="{{ Route::is('admin.sitemap.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.sitemap.index') }}">Sitemap</a></li>
                 <li class="{{ Route::is('admin.redirect.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.redirect.index') }}">Redirects</a></li>
 
                 <!--<li class="{{ Route::is('admin.slider.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">{{__('admin.Slider')}}</a></li>-->

@@ -64,7 +64,7 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h2>{{ $categories[0]->category->name }}</h2>
+            <h1>{{ $categories[0]->category->name }}</h1>
             <p>{{ $categories[0]->category->short_description }} </p>
 
             <ul class="thm-breadcrumb list-unstyled">

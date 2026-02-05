@@ -472,7 +472,8 @@
         margin-left: 0;
         margin-top: 20px;
     }
-    .page-header__inner h2 {
+    .page-header__inner h2,
+    .page-header__inner h1 {
         font-size: 50px;
     }
     .page-header__inner h2 br {

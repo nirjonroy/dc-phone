@@ -31,7 +31,7 @@
 <body class="bg-light">
 <div class="container">
     <div class="py-5 text-center">
-        <h2>Make Payment</h2>
+        <h1>Make Payment</h1>
         <!--<p class="lead">Below is an example form built entirely with Bootstrap’s form controls. We have provided this sample form for understanding Hosted Checkout Payment with SSLCommerz.</p>-->
     </div>
 

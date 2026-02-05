@@ -20,7 +20,7 @@
     @endphp
     <div class="container">
         <div class="page-header__inner text-center">
-            <h2>
+            <h1>
                 @if(!empty($services[0]->category))
             {{ $services[0]->category->name }}
             @endif
@@ -30,7 +30,7 @@
             @if(!empty($services[0]->childCategory))
              /{{ $services[0]->childCategory->name }}
             @endif
-            </h2>
+            </h1>
             <p>
                 @if(!empty($services[0]->category))
                 {{ $services[0]->category->short_description }}

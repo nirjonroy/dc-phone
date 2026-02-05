@@ -70,7 +70,7 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h2>About Us</h2>
+            <h1>About Us</h1>
             <p>{{$about_us->description_three}} </p>
             <ul class="thm-breadcrumb list-unstyled">
                 <li><a href="index.html">Home</a></li>

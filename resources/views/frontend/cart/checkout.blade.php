@@ -1,11 +1,12 @@
 @extends('frontend.app')
-@section('title', 'Home')
+@section('title', 'Checkout')
 @push('css')
     <link rel="stylesheet" href="{{ asset('frontend/css/checkout.css') }}">
 @endpush
 @section('content')
 <div class="main-wrapper">
 <section class="bodyTable">
+<h1 style="text-align:center; margin: 12px 0 24px;">Checkout</h1>
 <div>
 <div class="checkoutExperience2">
 <div class="loaded">
@@ -813,4 +814,3 @@
         window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
     })(window, document);
 </script>
-

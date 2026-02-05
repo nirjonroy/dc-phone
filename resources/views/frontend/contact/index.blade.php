@@ -17,7 +17,7 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h2>Contact Us</h2>
+            <h1>Contact Us</h1>
             <p>Professional Smartphone Laptop Repair Services </p>
             <ul class="thm-breadcrumb list-unstyled">
                 <li><a href="{{route('front.home')}}">Home</a></li>

@@ -67,7 +67,7 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h2>All Services </h2>
+            <h1>All Services </h1>
             <p> </p>
             <ul class="thm-breadcrumb list-unstyled">
                 <li><a href="index.html">Home</a></li>

@@ -72,7 +72,7 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h2>Blog Details</h2>
+            <h1>{{ $blog->title }}</h1>
 
             <ul class="thm-breadcrumb list-unstyled">
                 <li><a href="{{route('front.home')}}">Home</a></li>

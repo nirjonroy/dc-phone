@@ -76,7 +76,7 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h2>Service Details</h2>
+            <h1>Service Details</h1>
             <p>Professional Smartphone Laptop Repair Service</p>
             <ul class="thm-breadcrumb list-unstyled">
                 <li><a href="index.html">Home</a></li>

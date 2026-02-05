@@ -117,7 +117,9 @@ class HomeController extends Controller
             ->get();
 
         if ($categories->count() <= 0) {
-            return redirect()->route('front.shop', ['slug'=> $categoryModel->slug ]);
+            $services = $categoryModel->products;
+            $feateuredCategories = featuredCategories();
+            return view('frontend.shop.index', compact('services', 'feateuredCategories'));
         }
 
         return view('frontend.category.sub-category', compact('categories'));
@@ -136,10 +138,27 @@ class HomeController extends Controller
             ->get();
 
         if ($categories->count() <= 0) {
-            return redirect()->route('front.shop', ['slug'=> $subCategory->slug ]);
+            $services = $subCategory->products;
+            $feateuredCategories = featuredCategories();
+            return view('frontend.shop.index', compact('services', 'feateuredCategories'));
         }
 
         return view('frontend.category.child-category', compact('categories'));
+    }
+
+    public function servicesChildCategory($category, $subcategory, $child)
+    {
+        $categoryModel = Category::whereSlug($category)->firstOrFail();
+        $subCategory = SubCategory::where('slug', $subcategory)
+            ->where('category_id', $categoryModel->id)
+            ->firstOrFail();
+        $childCategory = ChildCategory::where('slug', $child)
+            ->where('sub_category_id', $subCategory->id)
+            ->firstOrFail();
+
+        $services = $childCategory->products;
+        $feateuredCategories = featuredCategories();
+        return view('frontend.shop.index', compact('services', 'feateuredCategories'));
     }
 
     public function repairIndex(Request $request, $slug = null)
@@ -197,23 +216,24 @@ class HomeController extends Controller
     {
         // dd('ok');
          $data = [];
+        $slug = $slug ?: $request->slug;
 
         if(empty($data))
         {
-            $data = Category::with('products')->whereSlug($request->slug)->first();
+            $data = Category::with('products')->whereSlug($slug)->first();
         }
 
         if(empty($data))
         {
-            $data = SubCategory::with('products')->whereSlug($request->slug)->first();
+            $data = SubCategory::with('products')->whereSlug($slug)->first();
         }
 
         if(empty($data))
         {
-            $data = ChildCategory::with('products')->whereSlug($request->slug)->first();
+            $data = ChildCategory::with('products')->whereSlug($slug)->first();
         }
 
-        if(empty($request->slug))
+        if(empty($slug))
         {
             $services = Product::with(['category', 'subCategory', 'childCategory'])->orderBy('id', 'DESC')->where('status', 1)->take(30)->get();
             // dd($services);

@@ -94,8 +94,10 @@
             <!--Services Two Single Start-->
             @forelse($categories as $key => $subCategory)
             <div class="col-xl-3 col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="100ms">
-                <a href="{{ route('front.shop', [
-                            'slug'=> $subCategory->slug
+                <a href="{{ route('front.services.childcategory', [
+                            'category' => $subCategory->category->slug,
+                            'subcategory' => $subCategory->subCategory->slug,
+                            'child' => $subCategory->slug
                             ] ) }}">
                 <div class="services-two__single">
                     <div class="services-two__single-inner">
@@ -109,8 +111,10 @@
                                                     @endif
                             </span>
                         </div>
-                        <h3 class="services-two__title"><a href="{{ route('front.shop', [
-                            'slug'=> $subCategory->slug
+                        <h3 class="services-two__title"><a href="{{ route('front.services.childcategory', [
+                            'category' => $subCategory->category->slug,
+                            'subcategory' => $subCategory->subCategory->slug,
+                            'child' => $subCategory->slug
                             ] ) }}">
                             {{ $subCategory->name }}
                         </a></h3>

@@ -14,8 +14,12 @@
 <section class="page-header">
     <div class="page-header-bg" style="background-image: url({{asset('frontend/assets/images/single_serv.jpg')}});">
     </div>
+    @php
+        $heroPhone = siteInfo()->topbar_phone;
+        $heroTel = $heroPhone ? preg_replace('/[^0-9+]/', '', $heroPhone) : '';
+    @endphp
     <div class="container">
-        <div class="page-header__inner">
+        <div class="page-header__inner text-center">
             <h2>
                 @if(!empty($services[0]->category))
             {{ $services[0]->category->name }}
@@ -38,7 +42,11 @@
                  {{ $services[0]->childCategory->short_description }}
                 @endif
             </p>
-            <ul class="thm-breadcrumb list-unstyled">
+            <div class="page-header__btn-box text-center" style="margin-top: 18px;">
+                <a href="{{route('front.contact')}}" class="thm-btn d-none d-md-inline-block">Schedule An Appointment Today</a>
+                <a href="{{ $heroTel ? 'tel:' . $heroTel : '#' }}" class="thm-btn d-inline-block d-md-none">Schedule An Appointment Today</a>
+            </div>
+            <ul class="thm-breadcrumb list-unstyled" style="justify-content:center;">
                 <li><a href="index.html">Home</a></li>
                 <li><span>//</span></li>
                 <li>Service Details</li>

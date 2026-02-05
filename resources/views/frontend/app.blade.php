@@ -41,7 +41,7 @@
                     </div>
                     <p class="faq-one__text-1">Welcome to our FAQ section! Here, we've compiled a list of commonly asked questions to provide you with quick answers and assistance. If you don't find the answer you're looking for, feel free to contact us directly, and we'll be happy to help.</p>
                     
-                    <div class="faq-one__btn-box">
+                    <div class="faq-one__btn-box" style="margin-top: 18px;">
                         <a href="{{route('front.contact')}}" class=" thm-btn faq-one__btn">Ask Questions Here</a>
                     </div>
                 </div>
@@ -127,4 +127,3 @@
     @include('sweetalert::alert')
 
     @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
-

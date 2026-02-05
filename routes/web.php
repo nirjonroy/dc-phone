@@ -765,6 +765,7 @@ Route::group(['as' => 'front.'], function(){
         })->name('subcategory');
 
         Route::get('/services/{category}', 'servicesCategory')->name('services.category');
+        Route::get('/services/{category}/{subcategory}/{child}', 'servicesChildCategory')->name('services.childcategory');
         Route::get('/services/{category}/{subcategory}', 'servicesSubCategory')->name('services.subcategory');
 
         Route::get('/repair/{slug?}', 'repairIndex')->name('shop');

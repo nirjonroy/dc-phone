@@ -747,7 +747,7 @@
                                             <div class="tab-pane fade" id="googleAnalyticTab" role="tabpanel" aria-labelledby="google-analytic-tab">
                                                 <div class="card m-0">
                                                     <div class="card-body">
-                                                        <form action="{{ route('user.update-google-analytic') }}" method="POST">
+                                                        <form action="{{ route('admin.update-google-analytic') }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="form-group">
@@ -761,7 +761,7 @@
                                                             <div class="form-group">
                                                                 <label for="">{{__('admin.Analytic Tracking Id')}}</label>
 
-                                                                <textarea cols="80" rows="8" name="analytic_id">{{ $googleAnalytic->analytic_id }}</textarea>
+                                                                <textarea cols="80" rows="8" name="analytic_script">{{ $googleAnalytic->analytic_script ?: $googleAnalytic->analytic_id }}</textarea>
                                                             </div>
 
                                                             <button class="btn btn-primary">{{__('admin.Update')}}</button>

@@ -1,7 +1,8 @@
 <head>
     @php 
         $seo = DB::table('settings')->first();
-         $SeoSettings = DB::table('seo_settings')->where('id', 1)->first();
+        $SeoSettings = DB::table('seo_settings')->where('id', 1)->first();
+        $googleAnalytic = DB::table('google_analytics')->first();
     @endphp
     <title> @yield('title', $SeoSettings->seo_title ?? 'DC Phone Repair')</title>
    
@@ -55,6 +56,19 @@
     @endif
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 @endif
+    @if($googleAnalytic && $googleAnalytic->status == 1)
+        @php
+            $analyticPayload = $googleAnalytic->analytic_script ?: $googleAnalytic->analytic_id;
+            $hasScriptTag = $analyticPayload && stripos($analyticPayload, '<script') !== false;
+        @endphp
+        @if($analyticPayload)
+            @if($hasScriptTag)
+                {!! $analyticPayload !!}
+            @else
+                <script type="application/ld+json">{!! $analyticPayload !!}</script>
+            @endif
+        @endif
+    @endif
     
     <!-- favicons Icons -->
     <!--<link rel="apple-touch-icon" sizes="180x180" href="{{asset($seo->favicon)}}" />-->

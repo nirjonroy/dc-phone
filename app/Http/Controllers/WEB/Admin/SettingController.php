@@ -342,17 +342,17 @@ class SettingController extends Controller
     public function updateGoogleAnalytic(Request $request){
         $rules = [
             'allow' => 'required',
-            'analytic_id' => $request->allow == 1 ?  'required' : ''
+            'analytic_script' => $request->allow == 1 ?  'required' : 'nullable'
         ];
         $customMessages = [
             'allow.required' => trans('admin_validation.Allow is required'),
-            'analytic_id.required' => trans('admin_validation.Analytic id is required'),
+            'analytic_script.required' => trans('admin_validation.Analytic id is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $googleAnalytic = GoogleAnalytic::first();
         $googleAnalytic->status = $request->allow;
-        $googleAnalytic->analytic_id = $request->analytic_id;
+        $googleAnalytic->analytic_script = $request->analytic_script;
         $googleAnalytic->save();
 
         $notification = trans('admin_validation.Update Successfully');

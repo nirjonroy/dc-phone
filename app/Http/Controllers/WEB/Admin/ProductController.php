@@ -641,7 +641,7 @@ public function fshippingdestroy(Request $request) {
     public function updateGoogleAnalytic(Request $request){
         $rules = [
             'allow' => '',
-            'analytic_id' => $request->allow == 1 ?  '' : ''
+            'analytic_script' => $request->allow == 1 ?  '' : ''
         ];
         $customMessages = [
             // 'allow.required' => trans('admin_validation.Allow is required'),
@@ -651,7 +651,10 @@ public function fshippingdestroy(Request $request) {
         $this->validate($request, $rules,$customMessages);
         $googleAnalytic = GoogleAnalytic::first();
         $googleAnalytic->status = $request->allow;
-        $googleAnalytic->analytic_id = $request->analytic_id;
+        $googleAnalytic->analytic_script = $request->analytic_script;
+        if ($request->filled('analytic_id')) {
+            $googleAnalytic->analytic_id = $request->analytic_id;
+        }
         $googleAnalytic->save();
 
         $notification = trans('admin_validation.Update Successfully');

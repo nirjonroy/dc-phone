@@ -769,11 +769,10 @@ Route::group(['as' => 'front.'], function(){
         Route::get('/services/{category}/{subcategory}', 'servicesSubCategory')->name('services.subcategory');
 
         Route::get('/repair/{slug?}', 'repairIndex')->name('shop');
-        Route::get('/service/{slug?}', function ($slug = null) {
-            return redirect()->route('front.shop', ['slug' => $slug], 301);
+        Route::get('/service/{slug?}', 'single_service')->name('single.service');
+        Route::get('/make-appoinment/{slug?}', function ($slug = null) {
+            return redirect()->route('front.single.service', ['slug' => $slug], 301);
         });
-
-        Route::get('/make-appoinment/{slug?}', 'single_service')->name('single.service');
         Route::get('/service-details/{slug?}', function ($slug = null) {
             return redirect()->route('front.single.service', ['slug' => $slug], 301);
         });

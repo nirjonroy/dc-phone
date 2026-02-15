@@ -9,6 +9,13 @@
     $metaAuthor = $service->author ?: ($SeoSettings->author ?: '');
     $metaPublisher = $service->publisher ?: ($SeoSettings->publisher ?: '');
     $metaCopyright = $service->copyright ?: ($SeoSettings->copyright ?: '');
+    $metaModifiedTime = $service->updated_at ? $service->updated_at->toAtomString() : null;
+    $category = $service->category;
+    $subCategory = $service->subCategory;
+    $childCategory = $service->childCategory;
+    $heroDescription = $service->short_description
+        ? Str::limit(strip_tags($service->short_description), 140)
+        : ($service->seo_description ?: ($category?->short_description ?: ($SeoSettings->seo_description ?? '')));
 @endphp
 @section('title', $metaTitle . ' - DC-Phone-Repair')
 @push('css')
@@ -52,7 +59,9 @@
     <meta property="og:image:height" content="628">
     
     
-    <meta property="article:modified_time" content="2023-03-01T12:33:34+00:00">
+    @if($metaModifiedTime)
+        <meta property="article:modified_time" content="{{ $metaModifiedTime }}">
+    @endif
     <meta name="twitter:card" content="{{ $metaImage ? 'summary_large_image' : 'summary' }}">
     <meta name="twitter:title" content="{{$metaTitle}}">
     <meta name="twitter:description" content="{{$metaDescription}}">
@@ -76,12 +85,28 @@
     </div>
     <div class="container">
         <div class="page-header__inner">
-            <h1>Service Details</h1>
-            <p>Professional Smartphone Laptop Repair Service</p>
+            <h1>{{ $service->name }}</h1>
+            @if($heroDescription)
+                <p>{{ $heroDescription }}</p>
+            @endif
             <ul class="thm-breadcrumb list-unstyled">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="{{ route('front.home') }}">Home</a></li>
                 <li><span>//</span></li>
-                <li>Shop</li>
+                <li><a href="{{ route('front.repair.all') }}">Services</a></li>
+                @if($category)
+                    <li><span>//</span></li>
+                    <li><a href="{{ route('front.services.category', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                @endif
+                @if($category && $subCategory)
+                    <li><span>//</span></li>
+                    <li><a href="{{ route('front.services.subcategory', ['category' => $category->slug, 'subcategory' => $subCategory->slug]) }}">{{ $subCategory->name }}</a></li>
+                @endif
+                @if($category && $subCategory && $childCategory)
+                    <li><span>//</span></li>
+                    <li><a href="{{ route('front.services.childcategory', ['category' => $category->slug, 'subcategory' => $subCategory->slug, 'child' => $childCategory->slug]) }}">{{ $childCategory->name }}</a></li>
+                @endif
+                <li><span>//</span></li>
+                <li>{{ $service->name }}</li>
             </ul>
         </div>
     </div>
@@ -137,8 +162,8 @@
     </div>
     <div class="container">
         <div class="section-title section-title--two text-center">
-            <span class="section-title__tagline">Most</span>
-            <h2 class="section-title__title">Releted Service</h2>
+            <span class="section-title__tagline">Related</span>
+            <h2 class="section-title__title">Related Services</h2>
             <p class="section-title__text">DC Phone Repair</p>
         </div>
         <div class="row">

@@ -1,5 +1,82 @@
 @extends('frontend.app')
-@section('title', 'Service Details')
+@php
+    $SeoSettings = DB::table('seo_settings')->where('id', 3)->first();
+    $firstService = null;
+    if (isset($services)) {
+        if ($services instanceof \Illuminate\Support\Collection && $services->count()) {
+            $firstService = $services->first();
+        } elseif (is_array($services) && count($services)) {
+            $firstService = $services[0];
+        }
+    }
+    $category = $firstService?->category;
+    $subCategory = $firstService?->subCategory;
+    $childCategory = $firstService?->childCategory;
+    $contextCategory = $childCategory ?: ($subCategory ?: $category);
+    $metaBaseTitle = $contextCategory?->name ?? 'Services';
+    $metaTitle = $contextCategory?->meta_title ?: ($contextCategory?->seo_title ?: ($metaBaseTitle !== 'Services' ? $metaBaseTitle . ' Repair Services' : 'Device Repair Services'));
+    $metaDescription = $contextCategory?->meta_description ?: ($contextCategory?->seo_description ?: strip_tags($contextCategory?->short_description ?? ''));
+    $metaImage = $contextCategory?->meta_image ? asset($contextCategory->meta_image) : ($contextCategory?->image ? asset($contextCategory->image) : ($SeoSettings && $SeoSettings->meta_image ? asset($SeoSettings->meta_image) : ''));
+    $siteName = $contextCategory?->site_name ?: ($SeoSettings ? ($SeoSettings->site_name ?: $SeoSettings->seo_title) : '');
+    $metaKeywords = $contextCategory?->keywords ?: ($SeoSettings?->keywords ?? '');
+    $metaAuthor = $contextCategory?->author ?: ($SeoSettings?->author ?? '');
+    $metaPublisher = $contextCategory?->publisher ?: ($SeoSettings?->publisher ?? '');
+    $metaCopyright = $contextCategory?->copyright ?: ($SeoSettings?->copyright ?? '');
+    $headerTitleParts = [];
+    if ($category) {
+        $headerTitleParts[] = $category->name;
+    }
+    if ($subCategory) {
+        $headerTitleParts[] = $subCategory->name;
+    }
+    if ($childCategory) {
+        $headerTitleParts[] = $childCategory->name;
+    }
+    $headerTitle = $headerTitleParts ? implode(' / ', $headerTitleParts) : ($contextCategory?->name ?? 'Services');
+    $headerDescription = $contextCategory?->short_description ?: ($contextCategory?->seo_description ?: '');
+@endphp
+@section('title', $metaTitle)
+@section('seos')
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="title" content="{{ $metaTitle }}">
+    <meta name="description" content="{{ $metaDescription }}">
+    @if($metaKeywords)
+        <meta name="keywords" content="{{ $metaKeywords }}">
+    @endif
+    @if($metaAuthor)
+        <meta name="author" content="{{ $metaAuthor }}">
+    @endif
+    @if($metaPublisher)
+        <meta name="publisher" content="{{ $metaPublisher }}">
+        <meta property="article:publisher" content="{{ $metaPublisher }}">
+    @endif
+    @if($metaCopyright)
+        <meta name="copyright" content="{{ $metaCopyright }}">
+    @endif
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($siteName)
+        <meta property="og:site_name" content="{{ $siteName }}">
+    @endif
+    @if($metaImage)
+        <meta property="og:image" content="{{ $metaImage }}">
+    @endif
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
+    <meta name="twitter:card" content="{{ $metaImage ? 'summary_large_image' : 'summary' }}">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    @if($metaImage)
+        <meta name="twitter:image" content="{{ $metaImage }}">
+    @endif
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+@endsection
 @push('css')
 
 @endpush
@@ -20,36 +97,30 @@
     @endphp
     <div class="container">
         <div class="page-header__inner text-center">
-            <h1>
-                @if(!empty($services[0]->category))
-            {{ $services[0]->category->name }}
+            <h1>{{ $headerTitle }}</h1>
+            @if($headerDescription)
+                <p>{{ $headerDescription }}</p>
             @endif
-            @if(!empty($services[0]->subCategory))
-             /{{ $services[0]->subCategory->name }}
-            @endif
-            @if(!empty($services[0]->childCategory))
-             /{{ $services[0]->childCategory->name }}
-            @endif
-            </h1>
-            <p>
-                @if(!empty($services[0]->category))
-                {{ $services[0]->category->short_description }}
-                @endif
-                @if(!empty($services[0]->subCategory))
-                 {{ $services[0]->subCategory->short_description }}
-                @endif
-                @if(!empty($services[0]->childCategory))
-                 {{ $services[0]->childCategory->short_description }}
-                @endif
-            </p>
             <div class="page-header__btn-box text-center" style="margin-top: 18px;">
                 <a href="{{route('front.contact')}}" class="thm-btn d-none d-md-inline-block">Schedule An Appointment Today</a>
                 <a href="{{ $heroTel ? 'tel:' . $heroTel : '#' }}" class="thm-btn d-inline-block d-md-none">Schedule An Appointment Today</a>
             </div>
             <ul class="thm-breadcrumb list-unstyled" style="justify-content:center;">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="{{ route('front.home') }}">Home</a></li>
                 <li><span>//</span></li>
-                <li>Service Details</li>
+                <li><a href="{{ route('front.repair.all') }}">Services</a></li>
+                @if($category)
+                    <li><span>//</span></li>
+                    <li><a href="{{ route('front.services.category', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                @endif
+                @if($category && $subCategory)
+                    <li><span>//</span></li>
+                    <li><a href="{{ route('front.services.subcategory', ['category' => $category->slug, 'subcategory' => $subCategory->slug]) }}">{{ $subCategory->name }}</a></li>
+                @endif
+                @if($category && $subCategory && $childCategory)
+                    <li><span>//</span></li>
+                    <li>{{ $childCategory->name }}</li>
+                @endif
             </ul>
         </div>
     </div>
@@ -70,13 +141,12 @@
                 <div class="fixing-one__left">
                     <div class="fixing-one__img">
 
-                        @if(!empty($services[0]->childCategory->image))
-            <img src="{{asset($services[0]->childCategory->image)}}" class=" shadow p-3 mb-5  rounded" style=" display: block; margin:0 auto;">
-             @elseif(!empty($services[0]->subCategory->image))
-            <img src="{{asset($services[0]->subCategory->image)}}" class="shadow p-3 mb-5  rounded" style=" display: block; margin:0 auto; ">
-            @elseif(!empty($services[0]->category->image))
-            <img src="{{asset($services[0]->category->image)}}" class="shadow p-3 mb-5 rounded" style=" display: block; margin:0 auto;">
-
+                        @if($childCategory?->image)
+            <img src="{{ asset($childCategory->image) }}" class="shadow p-3 mb-5 rounded" style="display: block; margin:0 auto;">
+             @elseif($subCategory?->image)
+            <img src="{{ asset($subCategory->image) }}" class="shadow p-3 mb-5 rounded" style="display: block; margin:0 auto;">
+            @elseif($category?->image)
+            <img src="{{ asset($category->image) }}" class="shadow p-3 mb-5 rounded" style="display: block; margin:0 auto;">
             @endif
                     </div>
                 </div>
